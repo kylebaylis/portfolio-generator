@@ -1,7 +1,19 @@
-const commandLineArgs = process.argv.slice(2, process.argv.length);
+const fs = require('fs');
+
+const generatePage = require('./src/page-template.js');
+
+const profileDataArgs = process.argv.slice(2);
+
+
+// Old way
+//const name = profileDataArgs[0];
+//const github = profileDataArgs[1];
+
+// New way
+const [name, github] = profileDataArgs;
 
 // console.log(commandLineArgs);
-
+/* From lesson 1
 const printProfileData = profileDataArr => {
 
     // This...
@@ -9,10 +21,18 @@ const printProfileData = profileDataArr => {
         console.log(profileDataArr[i]);
     }
 
-    console.log("==========");
+    console.log('==========');
 
     // Is the same as this...
     profileDataArr.forEach(profileItem => console.log(profileItem));
 };
 
-printProfileData(commandLineArgs);
+printProfileData(profileDataArgs); */
+
+// Lesson 2
+
+fs.writeFile('./index.html', generatePage(name, github), err => {
+    if (err) throw new Error(err);
+
+    console.log('Portfolio complete! Check out index.html to see the output!');
+});
